@@ -67,7 +67,6 @@ const Signup = () => {
           validationSchema={schema}
           onSubmit={(user) => {
             setResponse(null);
-
             axios
               .post("http://localhost:3001/Signup", user)
               .then((res) => {
@@ -86,13 +85,13 @@ const Signup = () => {
                 <Grid item>
                   <Field
                     as={TextField}
-                    fullWidth
                     label="Name"
                     name="name"
                     onBlur={handleBlur}
                     helperText={touched.name ? errors.name : ""}
                     error={touched.name && Boolean(errors.name)}
                     placeholder="Enter your name"
+                    fullWidth
                   />
                 </Grid>
                 <Grid item>
