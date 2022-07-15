@@ -90,8 +90,9 @@ const Signup = () => {
                     onBlur={handleBlur}
                     helperText={touched.name ? errors.name : ""}
                     error={touched.name && Boolean(errors.name)}
-                    placeholder="Enter your name"
                     fullWidth
+                    placeholder="Enter your name"
+                    
                   />
                 </Grid>
                 <Grid item>
