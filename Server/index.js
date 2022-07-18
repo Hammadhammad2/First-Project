@@ -35,7 +35,8 @@ const userSchema = mongoose.Schema({
 const citySchema = mongoose.Schema({
   id: String,
   label: String,
-  value: String,
+  lat: String,
+  lon: String,
 });
 
 const User = new mongoose.model("User", userSchema);
@@ -100,12 +101,13 @@ app.post("/Login", async (req, res) => {
 });
 
 app.post("/City", async (req, res) => {
-  const { label, value } = req.body;
+  const { label, lat, lon } = req.body;
 
   try {
     const result = await City.create({
       label,
-      value,
+      lat,
+      lon,
     });
     console.log(result);
 
@@ -119,18 +121,18 @@ app.post("/City", async (req, res) => {
 app.get("/ShowCity", async (req, res) => {
   try {
     const data = await City.find({});
-    //console.log(data);
+    // console.log(data);
     res.status(200).json(data);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Something went wrong" });
   }
 });
-app.get("/deleteCity", async (req, res) => {
-  const { id } = req.body;
+
+app.delete("/deleteCity", async (req, res) => {
   try {
-    await City.deleteOne({ id });
-    res.status(200).json({ message: "Row Deleted" });
+    await City.findByIdAndRemove(req.query.cityId);
+    res.status(200).json({ message: "City Deleted Successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Something went wrong" });

@@ -30,6 +30,7 @@
     "react-select-async-paginate": "^0.6.1",
     "react-switch": "^7.0.0",
     "styled-components": "^5.3.5",
+    "use-debounce": "^8.0.2",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

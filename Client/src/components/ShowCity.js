@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Box } from "@mui/system";
 import { Button, Paper, Typography } from "@mui/material";
-//import MaterialTable from "material-table";
 import axios from "axios";
-// import DataGrid from "@mui/x-data-grid";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { array } from "yup/lib/locale";
 
 const paperStyle = { padding: "30px 20px", width: 800, margin: "50px auto" };
 
 const ShowCity = () => {
-  const [city, setCity] = useState([]);
-  useEffect(() => {
-    console.log("hello");
-  }, [city]);
+  const [cities, setCities] = useState([]);
+  // useEffect(() => {
+  //   console.log("hello");
+  // }, [cities]);
 
   const columns = [
     { title: "label", headerName: "label" },
@@ -52,8 +51,8 @@ const ShowCity = () => {
             axios
               .get("http://localhost:3001/ShowCity")
               .then((res) => {
-                setCity(res.data);
-                console.log(city);
+                console.log(res.data);
+                setCities(res.data);
               })
               .catch((res) => {
                 console.log(res.response.data.message);
@@ -63,53 +62,51 @@ const ShowCity = () => {
           Get Cities
         </Button>
 
-        {city.length > 0 && (
+        {cities.length > 0 && (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 500 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell component="th">City</TableCell>
-                  <TableCell component="th">Value</TableCell>
+                  <TableCell component="th">City Name</TableCell>
                   <TableCell component="th">Options</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {city.map((city, index) => (
+                {cities.map((city, index) => (
                   <TableRow
                     key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell>{city.label}</TableCell>
-                    <TableCell>{city.value}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                        onClick={(event) => {
-                          console.log(event.target.value);
-                          // axios
-                          //   .get("http://localhost:3001/deleteCity", city.id)
-                          //   .then((res) => {
-                          //     // console.log(res.response.data.message);
-                          //   })
-                          //   .catch((res) => {
-                          //     console.log(res.response.data.message);
-                          //   });
 
-                          // axios
-                          //   .get("http://localhost:3001/ShowCity")
-                          //   .then((res) => {
-                          //     setCity(res.data);
-                          //     console.log(city);
-                          //   })
-                          //   .catch((res) => {
-                          //     console.log(res.response.data.message);
-                          //   });
-                        }}
-                      >
-                        Delete
-                      </Button>
+                    <TableCell>
+                      {
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          fullWidth
+                          onClick={() => {
+                            axios
+                              .delete("http://localhost:3001/deleteCity", {
+                                params: {
+                                  cityId: city._id,
+                                },
+                              })
+                              .then((res) => {
+                                // console.log(res);
+
+                                setCities(
+                                  cities.filter((c) => c._id !== city._id)
+                                );
+                              })
+                              .catch((res) => {
+                                console.log(res.response.data.message);
+                              });
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      }
                     </TableCell>
                   </TableRow>
                 ))}
