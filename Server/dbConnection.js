@@ -3,6 +3,7 @@ import express from "express";
 
 export const dbConnection = () => {
   const app = express();
+
   mongoose
     .connect(
       "mongodb+srv://Hammad:Hammadhammad1@cluster0.wa042.mongodb.net/authentication?retryWrites=true&w=majority",
