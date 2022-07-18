@@ -1,8 +1,7 @@
 import express from "express";
-
 import cors from "cors";
 
-import dbConnection from "./dbConnection.js";
+import { dbConnection } from "./dbConnection.js";
 
 const app = express();
 app.use(express.json());
