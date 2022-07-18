@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box } from "@mui/system";
-import { Button, Paper, Stack, Typography } from "@mui/material";
+import { Button, Paper, Stack } from "@mui/material";
 import axios from "axios";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,23 +8,13 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { array } from "yup/lib/locale";
 import Logout from "./Logout";
 import { Link } from "react-router-dom";
-
-const paperStyle = { padding: "30px 20px", width: 800, margin: "50px auto" };
 
 const ShowCity = () => {
   const [cities, setCities] = useState([]);
   const user = JSON.parse(localStorage.getItem("profile"));
-  // useEffect(() => {
-  //   console.log("hello");
-  // }, [cities]);
 
-  const columns = [
-    { title: "label", headerName: "label" },
-    { title: "value", headerName: "value" },
-  ];
   return (
     <Box
       sx={{

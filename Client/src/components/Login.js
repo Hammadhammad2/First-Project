@@ -14,7 +14,7 @@ import {
   Divider,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const paperStyle = { padding: "30px 20px", width: 400, margin: "50px auto" };
 const headerStyle = { margin: 0 };
@@ -35,7 +35,7 @@ const schema = yup.object().shape({
 
 const Login = () => {
   const [response, setResponse] = useState(null);
-  const navigate = useNavigate();
+
   return (
     <Grid align="center">
       <Paper elevation={10} style={paperStyle}>
