@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import Logout from "./Logout";
 
 const SeeWeather = () => {
   const [city, setCity] = useState("");
@@ -20,9 +21,13 @@ const SeeWeather = () => {
   const [isFetch, setIsFetch] = useState(false);
   const [weather, setWeather] = useState(null);
 
+  const user = JSON.parse(localStorage.getItem("profile"));
+
   useEffect(() => {
     axios
-      .get("http://localhost:3001/ShowCity")
+      .get("http://localhost:3001/ShowCity", {
+        params: { userId: user._id },
+      })
       .then((res) => {
         setCities(res.data);
         setIsFetch(true);
@@ -91,36 +96,39 @@ const SeeWeather = () => {
       )}
 
       {weather && (
-        <Paper
-          elevation={2}
-          sx={{ width: "400px", margin: "50px 0px", padding: "20px" }}
-        >
-          <Stack direction="row">
-            <Box
-              flex={1}
-              component="img"
-              src={weather.img}
-              sx={{
-                maxHeight: "140px",
-                maxWidth: "140px",
-                verticalAlign: "middle",
-                paddingRight: "20px",
-              }}
-            />
-            <Stack direction="column" flex={1} justifyContent="center">
-              {console.log(weather)}
-              <Typography sx={{ fontSize: "22px", fontWeight: "500" }}>
-                {weather.temp + " \u00b0C"}
-              </Typography>
-              <Typography>{weather.type}</Typography>
-              <Typography>
-                {"Wind Speed: " + weather.windSpeed + " m/s"}
-              </Typography>
-              <Typography>{"Humidity: " + weather.humidity + "%"}</Typography>
+        <Stack direction="row" justifyContent="center">
+          <Paper
+            elevation={4}
+            sx={{ width: "400px", marginTop: "50px", padding: "20px" }}
+          >
+            <Stack direction="row">
+              <Box
+                flex={1}
+                component="img"
+                src={weather.img}
+                sx={{
+                  maxHeight: "140px",
+                  maxWidth: "140px",
+                  verticalAlign: "middle",
+                  paddingRight: "20px",
+                }}
+              />
+              <Stack direction="column" flex={1} justifyContent="center">
+                {console.log(weather)}
+                <Typography sx={{ fontSize: "22px", fontWeight: "500" }}>
+                  {weather.temp + " \u00b0C"}
+                </Typography>
+                <Typography>{weather.type}</Typography>
+                <Typography>
+                  {"Wind Speed: " + weather.windSpeed + " m/s"}
+                </Typography>
+                <Typography>{"Humidity: " + weather.humidity + "%"}</Typography>
+              </Stack>
             </Stack>
-          </Stack>
-        </Paper>
+          </Paper>
+        </Stack>
       )}
+      {user && <Logout />}
     </Box>
   );
 };

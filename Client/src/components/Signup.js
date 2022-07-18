@@ -4,6 +4,7 @@ import axios from "axios";
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import * as yup from "yup";
 import Alert from "@mui/material/Alert";
+import { Link } from "react-router-dom";
 import {
   Grid,
   Avatar,
@@ -11,6 +12,7 @@ import {
   TextField,
   Typography,
   Button,
+  Divider,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
@@ -65,13 +67,14 @@ const Signup = () => {
             confirmpassword: "",
           }}
           validationSchema={schema}
-          onSubmit={(user) => {
+          onSubmit={(user, { resetForm }) => {
             setResponse(null);
             axios
               .post("http://localhost:3001/Signup", user)
               .then((res) => {
                 console.log(res.data);
                 setResponse("Account created successfully!");
+                resetForm();
               })
               .catch((res) => {
                 console.log(res.response.data.message);
@@ -92,7 +95,6 @@ const Signup = () => {
                     error={touched.name && Boolean(errors.name)}
                     fullWidth
                     placeholder="Enter your name"
-                    
                   />
                 </Grid>
                 <Grid item>
@@ -161,6 +163,18 @@ const Signup = () => {
             </Form>
           )}
         </Formik>
+        <Divider sx={{ margin: "15px" }} orientation="horizontal">
+          OR
+        </Divider>
+        <Button
+          component={Link}
+          to="/Login"
+          variant="contained"
+          color="primary"
+          fullWidth
+        >
+          Login
+        </Button>
         <Paper>
           {response && (
             <Alert

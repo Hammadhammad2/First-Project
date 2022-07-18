@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box } from "@mui/system";
-import { Button, Paper, Typography } from "@mui/material";
+import { Button, Paper, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,11 +9,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { array } from "yup/lib/locale";
+import Logout from "./Logout";
+import { Link } from "react-router-dom";
 
 const paperStyle = { padding: "30px 20px", width: 800, margin: "50px auto" };
 
 const ShowCity = () => {
   const [cities, setCities] = useState([]);
+  const user = JSON.parse(localStorage.getItem("profile"));
   // useEffect(() => {
   //   console.log("hello");
   // }, [cities]);
@@ -25,31 +28,19 @@ const ShowCity = () => {
   return (
     <Box
       sx={{
-        mt: 50,
-        ml: 5,
-        boxShadow: 8,
-        width: "100rem",
-        height: "25rem",
-        bgcolor: (theme) =>
-          theme.palette.mode === "dark" ? "#101010" : "#fff",
-        color: (theme) =>
-          theme.palette.mode === "dark" ? "grey.300" : "grey.800",
-        p: 1,
-        m: 1,
-        borderRadius: 5,
-        textAlign: "center",
-        fontSize: "0.875rem",
-        fontWeight: "700",
+        margin: "100px",
       }}
     >
-      <Paper elevation={10} style={paperStyle}>
+      <Paper elevation={2} sx={{ padding: "20px" }}>
         <Button
           variant="contained"
           color="primary"
           fullWidth
           onClick={() => {
             axios
-              .get("http://localhost:3001/ShowCity")
+              .get("http://localhost:3001/ShowCity", {
+                params: { userId: user._id },
+              })
               .then((res) => {
                 console.log(res.data);
                 setCities(res.data);
@@ -58,6 +49,7 @@ const ShowCity = () => {
                 console.log(res.response.data.message);
               });
           }}
+          sx={{ marginBottom: "20px" }}
         >
           Get Cities
         </Button>
@@ -115,6 +107,17 @@ const ShowCity = () => {
           </TableContainer>
         )}
       </Paper>
+      <Stack direction="row" justifyContent="center">
+        <Button
+          component={Link}
+          to="/SeeWeather"
+          variant="contained"
+          sx={{ width: "200px" }}
+        >
+          Show Weather
+        </Button>
+      </Stack>
+      {user && <Logout />}
     </Box>
   );
 };

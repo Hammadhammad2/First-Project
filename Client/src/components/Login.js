@@ -11,8 +11,10 @@ import {
   TextField,
   Typography,
   Button,
+  Divider,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const paperStyle = { padding: "30px 20px", width: 400, margin: "50px auto" };
 const headerStyle = { margin: 0 };
@@ -33,6 +35,7 @@ const schema = yup.object().shape({
 
 const Login = () => {
   const [response, setResponse] = useState(null);
+  const navigate = useNavigate();
   return (
     <Grid align="center">
       <Paper elevation={10} style={paperStyle}>
@@ -52,7 +55,9 @@ const Login = () => {
             axios
               .post("http://localhost:3001/Login", user)
               .then((res) => {
-                setResponse("Logged In Successfully!");
+                // setResponse("Logged In Successfully!");
+                localStorage.setItem("profile", JSON.stringify(res.data));
+                window.location.replace("/City");
               })
               .catch((res) => {
                 console.log(res.response.data.message);
@@ -101,6 +106,18 @@ const Login = () => {
             </Form>
           )}
         </Formik>
+        <Divider sx={{ margin: "15px" }} orientation="horizontal">
+          OR
+        </Divider>
+        <Button
+          component={Link}
+          to="/Signup"
+          variant="contained"
+          color="primary"
+          fullWidth
+        >
+          Sign up
+        </Button>
         <Paper>
           {response && (
             <Alert
