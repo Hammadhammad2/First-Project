@@ -20,7 +20,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 const schema = yup.object().shape({
   name: yup.string().required("Please Enter your name"),
   phoneno: yup
-    .number("Please enter digits only")
+    .number("Please Enter digits only")
     .required("Please Enter your Phone no")
     .positive("Please enter Positiv digits only")
     .integer("Enter Integer only"),
