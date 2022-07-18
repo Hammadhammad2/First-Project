@@ -1,60 +1,154 @@
-import { AsyncPaginate } from "react-select-async-paginate";
-import { React, useState, useEffect } from "react";
+// import { AsyncPaginate } from "react-select-async-paginate";
+// import { React, useState, useEffect } from "react";
+// import axios from "axios";
+
+// import { GEO_API_URL } from "./Api";
+// import { geoAPioptions } from "./Api";
+
+// const City = ({ onSeachChange }) => {
+
+//   const handleOnChange = (searchData) => {
+
+//        axios
+//       .post("http://localhost:3001/City",searchData)
+//       .then((res) => {
+//    console.log(res);
+//       })
+//       .catch((res) => {
+//         console.log(res.response.data.message);
+//       });
+//   };
+
+//   const loadOptions = (inputValue) => {
+//     return fetch(
+//       `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
+//       geoAPioptions
+//     )
+//       .then((response) => response.json())
+//       .then((response) => {
+//         return {
+//           options: response.data.map((city) => {
+//             return {
+//               value:`${city.latitude} ${city.longitude}`,
+//               label:`${city.name}`,
+//               code:`${city.countryCode}`
+//             };
+//           }),
+//         };
+
+//       })
+
+//       .catch((err) => console.error(err));
+//   };
+
+//   return (
+//     <Paper
+//       sx={{
+//         mt: 20,
+//         ml: 20,
+//         mr: 20,
+//       }}
+//     >
+//       <AsyncPaginate
+//         placeholder="Search for city"
+
+//         onChange={handleOnChange}
+//         loadOptions={loadOptions}
+//       ></AsyncPaginate>
+//     </Paper>
+//   );
+// };
+
+// export default City;
+
 import axios from "axios";
+import { useEffect, useState } from "react";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import { useDebounce } from "use-debounce";
 import { Paper, Button } from "@mui/material";
-import { GEO_API_URL } from "./Api";
-import { geoAPioptions } from "./Api";
 
-const City = ({ onSeachChange }) => {
-  const [search, setSearch] = useState(null);
+const City = () => {
+  const [displayLocations, setDisplayLocations] = useState([]);
 
-  const handleOnChange = (searchData) => {
-    setSearch(searchData);
-    console.log(searchData.label);
+  const [location, setLocation] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [delayValue] = useDebounce(inputValue, 1000);
+  const [value, setValue] = useState("");
 
-    axios
-      .post("http://localhost:3001/City", search)
-      .then((res) => {
-        // console.log(res);
-      })
-      .catch((res) => {
-        console.log(res.response.data.message);
-      });
-  };
-
-  const loadOptions = (inputValue) => {
-    return fetch(
-      `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
-      geoAPioptions
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        return {
-          options: response.data.map((city) => {
-            return {
-              name: city.name,
-            };
-          }),
-        };
-      })
-
-      .catch((err) => console.error(err));
-  };
+  useEffect(() => {
+    if (delayValue !== "" && !inputValue.includes(",")) {
+      axios
+        .get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${delayValue}.json?limit=5&proximity=ip&types=place%2Cpostcode&language=en&access_token=pk.eyJ1Ijoic2VkaWw0MDk4NyIsImEiOiJjbDVvMmQ4MWEwODd1M2NwZG56OHd0dnA1In0.mC9I7MCmfuu02D9snGFrmw`
+        )
+        .then((res) => {
+          const search = res.data.features;
+          var newData = [];
+          for (var i = 0; i < search.length; i++) {
+            newData.push({
+              label: search[i].place_name,
+              lon: search[i].geometry.coordinates[0],
+              lat: search[i].geometry.coordinates[1],
+            });
+          }
+          setDisplayLocations(newData);
+        });
+    }
+  }, [delayValue]);
 
   return (
     <Paper
+      elevation={2}
       sx={{
-        mt: 20,
-        ml: 20,
-        mr: 20,
+        margin: "100px",
+        padding: "20px",
       }}
     >
-      <AsyncPaginate
-        placeholder="Search for city"
-        value={search}
-        onChange={handleOnChange}
-        loadOptions={loadOptions}
-      ></AsyncPaginate>
+      <Autocomplete
+        noOptionsText="No Cities Found"
+        size="small"
+        clearOnBlur={false}
+        onChange={(event, newValue) => {
+          // setLocation(newValue);
+
+          if (newValue) {
+            location.push(newValue);
+
+            console.log(newValue);
+
+            axios
+              .post("http://localhost:3001/City", newValue)
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((res) => {
+                console.log(res.response.data.message);
+              });
+          }
+        }}
+        inputValue={inputValue}
+        onInputChange={(event, newInputValue) => {
+          setInputValue(newInputValue);
+          setDisplayLocations([]);
+        }}
+        id="controllable-states-demo"
+        options={displayLocations}
+        fullWidth
+        renderInput={(params) => (
+          <TextField {...params} label="Search Location" />
+        )}
+      />
+      <h2>Cities</h2>
+      {location.length > 0 ? (
+        <div>
+          {location.map((loc, index) => (
+            <h3 key={index}>{loc.label}</h3>
+          ))}
+        </div>
+      ) : (
+        <h3>No Cities Added</h3>
+      )}
     </Paper>
   );
 };
