@@ -55,7 +55,7 @@ const ShowCity = () => {
         </Button>
 
         {cities.length > 0 && (
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} elevation={2}>
             <Table sx={{ minWidth: 500 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -107,17 +107,19 @@ const ShowCity = () => {
           </TableContainer>
         )}
       </Paper>
-      <Stack direction="row" justifyContent="center">
-        <Button
-          component={Link}
-          to="/SeeWeather"
-          variant="contained"
-          sx={{ width: "200px" }}
-        >
-          Show Weather
-        </Button>
+      <Stack direction="row" justifyContent="center" spacing={3}>
+        <Box>
+          <Button
+            component={Link}
+            to="/SeeWeather"
+            variant="contained"
+            sx={{ width: "200px", margin: "50px 0px" }}
+          >
+            Show Weather
+          </Button>
+        </Box>
+        {user && <Logout />}
       </Stack>
-      {user && <Logout />}
     </Box>
   );
 };

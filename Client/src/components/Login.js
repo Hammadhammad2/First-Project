@@ -72,6 +72,7 @@ const Login = () => {
                   <Field
                     as={TextField}
                     fullWidth
+                    size="small"
                     label="Email"
                     name="email"
                     onBlur={handleBlur}
@@ -84,6 +85,7 @@ const Login = () => {
                   <Field
                     as={TextField}
                     fullWidth
+                    size="small"
                     label="Password"
                     name="password"
                     onBlur={handleBlur}

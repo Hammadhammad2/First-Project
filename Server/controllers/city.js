@@ -23,7 +23,6 @@ export const addCity = async (req, res) => {
 };
 
 export const showCity = async (req, res) => {
-  console.log(req.query);
   try {
     const data = await City.find({ userId: req.query.userId });
     // console.log(data);

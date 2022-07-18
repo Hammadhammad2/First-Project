@@ -67,67 +67,76 @@ const SeeWeather = () => {
 
   return (
     <Box sx={{ minWidth: 120, margin: "100px" }}>
-      {isFetch ? (
-        <Box>
-          {cities.length > 0 ? (
-            <FormControl fullWidth>
-              <InputLabel>Select City</InputLabel>
-              <Select value={city} label="Select City" onChange={handleChange}>
-                {cities.map((city, index) => (
-                  <MenuItem key={index} value={city._id}>
-                    {city.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          ) : (
-            <Box>
-              <Typography>No Cities Found. Please Add some first</Typography>
-              <Button component={Link} to="/City" variant="contained">
-                Add City
-              </Button>
-            </Box>
-          )}
-        </Box>
-      ) : (
-        <Box sx={{ width: "100%" }}>
-          <LinearProgress />
-        </Box>
-      )}
+      <Paper elevation={2} sx={{ padding: "20px" }}>
+        {isFetch ? (
+          <Box>
+            {cities.length > 0 ? (
+              <FormControl fullWidth>
+                <InputLabel size="small">Select City</InputLabel>
+                <Select
+                  value={city}
+                  label="Select City"
+                  size="small"
+                  onChange={handleChange}
+                >
+                  {cities.map((city, index) => (
+                    <MenuItem key={index} value={city._id}>
+                      {city.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            ) : (
+              <Box>
+                <Typography>No Cities Found. Please Add some first</Typography>
+                <Button component={Link} to="/City" variant="contained">
+                  Add City
+                </Button>
+              </Box>
+            )}
+          </Box>
+        ) : (
+          <Box sx={{ width: "100%" }}>
+            <LinearProgress />
+          </Box>
+        )}
 
-      {weather && (
-        <Stack direction="row" justifyContent="center">
-          <Paper
-            elevation={4}
-            sx={{ width: "400px", marginTop: "50px", padding: "20px" }}
-          >
-            <Stack direction="row">
-              <Box
-                flex={1}
-                component="img"
-                src={weather.img}
-                sx={{
-                  maxHeight: "140px",
-                  maxWidth: "140px",
-                  verticalAlign: "middle",
-                  paddingRight: "20px",
-                }}
-              />
-              <Stack direction="column" flex={1} justifyContent="center">
-                {console.log(weather)}
-                <Typography sx={{ fontSize: "22px", fontWeight: "500" }}>
-                  {weather.temp + " \u00b0C"}
-                </Typography>
-                <Typography>{weather.type}</Typography>
-                <Typography>
-                  {"Wind Speed: " + weather.windSpeed + " m/s"}
-                </Typography>
-                <Typography>{"Humidity: " + weather.humidity + "%"}</Typography>
+        {weather && (
+          <Stack direction="row" justifyContent="center">
+            <Paper
+              elevation={4}
+              sx={{ width: "400px", marginTop: "20px", padding: "20px" }}
+            >
+              <Stack direction="row">
+                <Box
+                  flex={1}
+                  component="img"
+                  src={weather.img}
+                  sx={{
+                    maxHeight: "140px",
+                    maxWidth: "140px",
+                    verticalAlign: "middle",
+                    paddingRight: "20px",
+                  }}
+                />
+                <Stack direction="column" flex={1} justifyContent="center">
+                  {console.log(weather)}
+                  <Typography sx={{ fontSize: "22px", fontWeight: "500" }}>
+                    {weather.temp + " \u00b0C"}
+                  </Typography>
+                  <Typography>{weather.type}</Typography>
+                  <Typography>
+                    {"Wind Speed: " + weather.windSpeed + " m/s"}
+                  </Typography>
+                  <Typography>
+                    {"Humidity: " + weather.humidity + "%"}
+                  </Typography>
+                </Stack>
               </Stack>
-            </Stack>
-          </Paper>
-        </Stack>
-      )}
+            </Paper>
+          </Stack>
+        )}
+      </Paper>
       {user && <Logout />}
     </Box>
   );

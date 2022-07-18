@@ -8,7 +8,7 @@ export const signup = async (req, res) => {
   try {
     const oldUser = await User.findOne({ email });
 
-    console.log(oldUser);
+    //console.log(oldUser);
 
     if (oldUser) {
       return res.status(400).json({ message: "User already exists" });
@@ -41,7 +41,7 @@ export const login = async (req, res) => {
   try {
     const oldUser = await User.findOne({ email });
 
-    console.log(oldUser);
+    //console.log(oldUser);
 
     if (!oldUser) {
       return res.status(400).json({ message: "User does not exists " });

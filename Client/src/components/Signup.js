@@ -90,6 +90,7 @@ const Signup = () => {
                     as={TextField}
                     label="Name"
                     name="name"
+                    size="small"
                     onBlur={handleBlur}
                     helperText={touched.name ? errors.name : ""}
                     error={touched.name && Boolean(errors.name)}
@@ -103,6 +104,7 @@ const Signup = () => {
                     fullWidth
                     label="Email"
                     name="email"
+                    size="small"
                     onBlur={handleBlur}
                     helperText={touched.email ? errors.email : ""}
                     error={touched.email && Boolean(errors.email)}
@@ -113,6 +115,7 @@ const Signup = () => {
                   <Field
                     as={TextField}
                     fullWidth
+                    size="small"
                     label="Phone no"
                     name="phoneno"
                     onBlur={handleBlur}
@@ -125,6 +128,7 @@ const Signup = () => {
                   <Field
                     as={TextField}
                     fullWidth
+                    size="small"
                     label="Password"
                     name="password"
                     onBlur={handleBlur}
@@ -137,6 +141,7 @@ const Signup = () => {
                   <Field
                     as={TextField}
                     fullWidth
+                    size="small"
                     label="Confirm Password"
                     name="confirmpassword"
                     onBlur={handleBlur}

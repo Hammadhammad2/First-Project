@@ -1,15 +1,11 @@
 import mongoose from "mongoose";
-import express from "express";
 
-export const dbConnection = () => {
-  const app = express();
-
+export const dbConnection = (app) => {
   mongoose
     .connect(
       "mongodb+srv://Hammad:Hammadhammad1@cluster0.wa042.mongodb.net/authentication?retryWrites=true&w=majority",
       {
-        //userNewUrlParser: true,
-        useUnifiedTopology: true,
+        useNewUrlParser: true,
       }
     )
     .then(() =>
