@@ -10,6 +10,7 @@ import ShowCity from "./components/ShowCity";
 import City from "./components/City";
 import SeeWeather from "./components/SeeWeather";
 import { AuthRoutes, ProtectedRoutes } from "./ProtectedRoutes";
+import "mdb-react-ui-kit/dist/css/mdb.min.css";
 
 const App = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));

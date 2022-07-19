@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logout from "./Logout";
+import bgimage from "../image.jpg";
 
 const SeeWeather = () => {
   const [city, setCity] = useState("");
@@ -66,69 +67,122 @@ const SeeWeather = () => {
   };
 
   return (
-    <Box sx={{ minWidth: 120, margin: "100px" }}>
-      <Paper elevation={2} sx={{ padding: "20px" }}>
-        {isFetch ? (
-          <Box>
-            {cities.length > 0 ? (
-              <FormControl fullWidth>
-                <InputLabel size="small">Select City</InputLabel>
-                <Select
-                  value={city}
-                  label="Select City"
-                  size="small"
-                  onChange={handleChange}
-                >
-                  {cities.map((city, index) => (
-                    <MenuItem key={index} value={city._id}>
-                      {city.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            ) : (
+    <Box
+      sx={{
+        backgroundImage: `url(${bgimage})`,
+        height: "100vh",
+
+        /* Center and scale the image nicely */
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundColor: "blue",
+      }}
+    >
+      <Box
+        sx={{
+          backgroundColor: "rgba(0, 0, 0, 0.4)",
+          padding: "200px 500px",
+          height: "100vh",
+        }}
+      >
+        <Box sx={{ minWidth: 120, margin: "50px" }}>
+          <Paper elevation={2} sx={{ padding: "20px" }}>
+            {isFetch ? (
               <Box>
-                <Typography>No Cities Found. Please Add some first</Typography>
-                <Button component={Link} to="/City" variant="contained">
-                  Add City
-                </Button>
+                {cities.length > 0 ? (
+                  <FormControl fullWidth>
+                    <InputLabel size="small">Select City</InputLabel>
+                    <Select
+                      value={city}
+                      label="Select City"
+                      size="small"
+                      onChange={handleChange}
+                    >
+                      {cities.map((city, index) => (
+                        <MenuItem key={index} value={city._id}>
+                          {city.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                ) : (
+                  <Box>
+                    <Typography>
+                      No Cities Found. Please Add some first
+                    </Typography>
+                    <Button component={Link} to="/City" variant="contained">
+                      Add City
+                    </Button>
+                  </Box>
+                )}
+              </Box>
+            ) : (
+              <Box sx={{ width: "100%" }}>
+                <LinearProgress />
               </Box>
             )}
-          </Box>
-        ) : (
-          <Box sx={{ width: "100%" }}>
-            <LinearProgress />
-          </Box>
-        )}
-
+          </Paper>
+        </Box>
         {weather && (
-          <Stack direction="row" justifyContent="center">
+          <Stack
+            direction="row"
+            justifyContent="center"
+            sx={{ padding: "20px" }}
+          >
             <Paper
-              elevation={4}
-              sx={{ width: "400px", marginTop: "20px", padding: "20px" }}
+              elevation={10}
+              sx={{
+                width: "500px",
+                marginTop: "10px",
+                padding: "30px",
+              }}
             >
               <Stack direction="row">
                 <Box
-                  flex={1}
+                  flex={2}
                   component="img"
                   src={weather.img}
                   sx={{
-                    maxHeight: "140px",
-                    maxWidth: "140px",
+                    maxHeight: "240px",
+                    maxWidth: "240px",
                     verticalAlign: "middle",
                     paddingRight: "20px",
                   }}
                 />
                 <Stack direction="column" flex={1} justifyContent="center">
                   {console.log(weather)}
-                  <Typography sx={{ fontSize: "22px", fontWeight: "500" }}>
-                    {weather.temp + " \u00b0C"}
+                  <Typography
+                    sx={{
+                      fontSize: "90px",
+                      fontWeight: "500",
+                      color: "#158FFA",
+                    }}
+                  >
+                    {weather.temp + "\u00b0C"}
                   </Typography>
-                  <Typography>{weather.type}</Typography>
-                  <Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: "300",
+                    }}
+                  >
+                    {weather.type}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: "300",
+                    }}
+                  >
                     {"Wind Speed: " + weather.windSpeed + " m/s"}
                   </Typography>
-                  <Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: "300",
+                    }}
+                  >
                     {"Humidity: " + weather.humidity + "%"}
                   </Typography>
                 </Stack>
@@ -136,8 +190,9 @@ const SeeWeather = () => {
             </Paper>
           </Stack>
         )}
-      </Paper>
-      {user && <Logout />}
+
+        {user && <Logout />}
+      </Box>
     </Box>
   );
 };

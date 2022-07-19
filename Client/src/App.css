@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.image {
+  background-image: url("image.jpg");
+
+  background-size: cover;
+  height: 100vh;
+
+  background-repeat: no-repeat;
+}
+.latest {
+  color: aquamarine;
+}
