@@ -41,7 +41,7 @@ const schema = yup.object().shape({
 
 //handle change
 
-const paperStyle = { padding: "30px 20px", width: 400, margin: "50px auto" };
+const paperStyle = { padding: "30px 20px", width: 400, margin: "150px auto" };
 const headerStyle = { margin: 0 };
 const avatarStyle = { backgroundColor: "#1877f2" };
 

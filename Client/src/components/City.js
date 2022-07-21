@@ -150,7 +150,7 @@ const City = () => {
               color: "#158FFA",
               textAlign: "center",
               bgcolor: "black",
-              font: "40px Open Sans",
+              font: "40px Open Sans bold",
               border: " 1px solid #158FFA",
             }}
           >
@@ -164,17 +164,34 @@ const City = () => {
               height: 400,
               overflow: "hidden",
               overflowY: "scroll",
+
+              borderColor: "secondary.main",
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
             {location.length > 0 ? (
-              <Box>
+              <Box sx={{ borderColor: "secondary.main" }}>
                 {location.map((loc, index) => (
-                  <h4 key={index}>{loc.label}</h4>
+                  <h4
+                    style={{
+                      color: "#34495E",
+                      font: "Arial",
+                    }}
+                    key={index}
+                  >
+                    {loc.label}
+                  </h4>
                 ))}
               </Box>
             ) : (
-              <h4>No Cities Added</h4>
+              <h4
+                style={{
+                  color: "#34495E",
+                  font: "Open Sans",
+                }}
+              >
+                No Cities Added
+              </h4>
             )}
           </Box>
           <Divider />

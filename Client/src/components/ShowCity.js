@@ -135,9 +135,12 @@ const ShowCity = () => {
                 style={{
                   color: "#158FFA",
                   textAlign: "center",
+                  bgcolor: "black",
+                  font: "40px Open Sans bold",
+                  border: " 1px solid #158FFA",
                 }}
               >
-                Click button to see cities
+                Click button to get cities
               </h5>
             )}
           </Box>
