@@ -5,6 +5,11 @@ import bodyParser from "body-parser";
 
 import { dbConnection } from "./dbConnection.js";
 
+const Port =
+  process.env.NODE_ENV && process.env.NODE_ENV === "test"
+    ? process.env.TEST_PORT || 4000
+    : process.env.PORT || 3001;
+
 const app = express();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));

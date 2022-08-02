@@ -5,6 +5,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import axios from "axios";
+import { borders } from "@mui/system";
+
 import {
   Button,
   LinearProgress,
@@ -131,16 +133,18 @@ const SeeWeather = () => {
             sx={{ padding: "20px" }}
           >
             <Paper
-              elevation={10}
+              elevation={20}
               sx={{
                 width: "500px",
                 marginTop: "10px",
                 padding: "30px",
+                borderRadius: "25px",
+                borderColor: "error.main",
               }}
             >
               <Stack direction="row">
                 <Box
-                  flex={2}
+                  flex={10}
                   component="img"
                   src={weather.img}
                   sx={{

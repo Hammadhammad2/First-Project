@@ -47,8 +47,8 @@ const ShowCity = () => {
                   params: { userId: user._id },
                 })
                 .then((res) => {
-                  console.log(res.data);
-                  setCities(res.data);
+                  console.log(res);
+                  setCities(res);
                 })
                 .catch((res) => {
                   console.log(res.response.data.message);
@@ -110,14 +110,14 @@ const ShowCity = () => {
                                     },
                                   })
                                   .then((res) => {
-                                    // console.log(res);
+                                    console.log(res);
 
                                     setCities(
                                       cities.filter((c) => c._id !== city._id)
                                     );
                                   })
                                   .catch((res) => {
-                                    console.log(res.response.data.message);
+                                    console.log(res);
                                   });
                               }}
                             >

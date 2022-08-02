@@ -169,6 +169,7 @@ const City = () => {
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
+            {console.log(location)}
             {location.length > 0 ? (
               <Box sx={{ borderColor: "secondary.main" }}>
                 {location.map((loc, index) => (

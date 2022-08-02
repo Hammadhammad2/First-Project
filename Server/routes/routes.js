@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/Signup", signup);
 router.post("/Login", login);
-router.post("/City", addCity);
+router.post("/addCity", addCity);
 router.get("/ShowCity", showCity);
 router.delete("/deleteCity", deleteCity);
 
